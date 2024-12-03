@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import { Outfit } from "next/font/google";
+import Provider from "./provider";
 
 export const metadata = {
   title: "Create Next App",
@@ -12,7 +13,9 @@ const outfit = Outfit({ subsets: ["latin"] });
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={outfit.className}>{children}</body>
+      <body className={outfit.className}>
+        <Provider>{children}</Provider>
+      </body>
     </html>
   );
 }
