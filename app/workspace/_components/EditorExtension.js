@@ -1,4 +1,8 @@
+import { chatSession } from "@/configs/AIModel";
+import { api } from "@/convex/_generated/api";
+import { useUser } from "@clerk/nextjs";
 import TaskList from "@tiptap/extension-task-list";
+import { useAction, useMutation } from "convex/react";
 import {
   AlignCenter,
   AlignLeft,
@@ -10,13 +14,72 @@ import {
   Italic,
   LinkIcon,
   ListIcon,
+  Sparkles,
   Strikethrough,
   UnderlineIcon,
 } from "lucide-react";
+import { useParams } from "next/navigation";
 
 import React from "react";
+import { toast } from "sonner";
 
-const EditorExtension = ({ editor }) => {
+function EditorExtension({ editor }) {
+  const { fileId } = useParams();
+  const SearchAI = useAction(api.myAction.search);
+
+  const saveNotes = useMutation(api.notes.AddNotes);
+  const { user } = useUser();
+
+  const onAiClick = async () => {
+    toast("AI is getting your answer...");
+
+    const selectedText = editor.state.doc.textBetween(
+      editor.state.selection.from,
+      editor.state.selection.to,
+      " "
+    );
+    console.log("selectedText", selectedText);
+
+    //now passing this text to vector search
+    const result = await SearchAI({
+      query: selectedText,
+      fileId: fileId,
+    });
+
+    const UnformattedAns = JSON.parse(result);
+    let AllunformattedAns = "";
+    UnformattedAns &&
+      UnformattedAns.forEach((item) => {
+        AllunformattedAns = AllunformattedAns + item.pageContent;
+      });
+
+    const PROMPT =
+      "For question :" +
+      selectedText +
+      "and with the given content as answer," +
+      "please give appropriate answer in HTML format. The answer content is: " +
+      AllunformattedAns;
+
+    const AiModelResult = await chatSession.sendMessage(PROMPT);
+    console.log(AiModelResult.response.text());
+    const FinalAns = AiModelResult.response
+      .text()
+      .replace("```", "")
+      .replace("html", "")
+      .replace("```", "");
+
+    const AllText = editor.getHTML();
+    editor.commands.setContent(
+      AllText + "<p><strong>Answer: </strong>" + FinalAns + "</p>"
+    );
+
+    saveNotes({
+      notes: editor.getHTML(),
+      fileId: fileId,
+      createdBy: user?.primaryEmailAddress?.emailAddress,
+    });
+  };
+
   const highlightColors = [
     { color: "#ffc078", label: "Y" },
     { color: "#ff6b6b", label: "R" },
@@ -143,11 +206,17 @@ const EditorExtension = ({ editor }) => {
             >
               <AlignRight />
             </button>
+            <button
+              onClick={() => onAiClick()}
+              className={"hover:text-blue-500"}
+            >
+              <Sparkles />
+            </button>
           </div>
         </div>
       </div>
     )
   );
-};
+}
 
 export default EditorExtension;
