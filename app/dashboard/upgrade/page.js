@@ -159,12 +159,30 @@ function UpgradePlans() {
               </li>
             </ul>
 
-            <a
+            {/* <a
               href="#"
               className="mt-8 block rounded-full border border-indigo-600 bg-indigo-600 px-12 py-3 text-center text-sm font-medium text-white hover:bg-indigo-700 hover:ring-1 hover:ring-indigo-700 focus:outline-none focus:ring active:text-indigo-500"
             >
               Get Started
-            </a>
+            </a> */}
+            <div className="mt-5">
+              <PayPalButtons
+                onApprove={() => onPaymentSuccess()}
+                onCancel={() => console.log("Payment cancel")}
+                createOrder={(data, actions) => {
+                  return actions?.order?.create({
+                    purchase_units: [
+                      {
+                        amount: {
+                          value: 9.99,
+                          currency_code: "USD",
+                        },
+                      },
+                    ],
+                  });
+                }}
+              />
+            </div>
           </div>
 
           <div className="rounded-2xl border border-gray-200 p-6 shadow-sm sm:px-8 lg:p-12">
@@ -177,7 +195,7 @@ function UpgradePlans() {
               <p className="mt-2 sm:mt-4">
                 <strong className="text-3xl font-bold text-gray-900 sm:text-4xl">
                   {" "}
-                  20${" "}
+                  0${" "}
                 </strong>
 
                 <span className="text-sm font-medium text-gray-700">
@@ -264,30 +282,12 @@ function UpgradePlans() {
               </li>
             </ul>
 
-            {/* <a
+            <a
               href="#"
               className="mt-8 block rounded-full border border-indigo-600 bg-white px-12 py-3 text-center text-sm font-medium text-indigo-600 hover:ring-1 hover:ring-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
             >
               Get Started
-            </a> */}
-            <div className="mt-5">
-              <PayPalButtons
-                onApprove={() => onPaymentSuccess()}
-                onCancel={() => console.log("Payment cancel")}
-                createOrder={(data, actions) => {
-                  return actions?.order?.create({
-                    purchase_units: [
-                      {
-                        amount: {
-                          value: 9.99,
-                          currency_code: "USD",
-                        },
-                      },
-                    ],
-                  });
-                }}
-              />
-            </div>
+            </a>
           </div>
         </div>
       </div>

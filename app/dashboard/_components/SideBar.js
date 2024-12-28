@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Layout, Shield } from "lucide-react";
+import { Brain, Layout, Shield } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import UploadPdf from "./UploadPdf";
 import { useUser } from "@clerk/nextjs";
@@ -26,11 +26,17 @@ function SideBar() {
   });
   return (
     <div className="shadow-md h-screen p-7">
-      <Image src={"/mylogo.svg"} alt="logo" width={170} height={120} />
+      {/* <Image src={"/mylogo.svg"} alt="logo" width={170} height={120} /> */}
+      <Link className="flex items-center justify-center" href="/">
+        <Brain className="h-8 w-8 text-blue-600 transition-transform duration-300 transform hover:scale-110" />
+        <span className="ml-3 text-2xl font-extrabold text-gray-800 hover:text-blue-600 transition-colors duration-300">
+          NoteFlix.ai
+        </span>
+      </Link>
       <div className="mt-10">
         <UploadPdf
           isMaxFile={
-            fileList?.length >= 5 && !GetUserInfo.upgrade ? true : false
+            fileList?.length >= 10 && !GetUserInfo.upgrade ? true : false
           }
         >
           <Button className="w-full">+ Upload Pdf</Button>
@@ -57,9 +63,9 @@ function SideBar() {
 
       {!GetUserInfo?.upgrade && (
         <div className="absolute bottom-24 w-[80%]">
-          <Progress value={(fileList?.length / 5) * 100} />
+          <Progress value={(fileList?.length / 10) * 100} />
           <p className="text-sm mt-1">
-            {fileList?.length} out of 5 Pdf Uploaded
+            {fileList?.length} out of 10 Pdf Uploaded
           </p>
 
           <p className="text-sm  text-gray-400 mt-2">
