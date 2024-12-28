@@ -26,10 +26,23 @@ An advanced Full Stack application for extracting and making notes from PDFs usi
 Add your app screenshots here:
 
 1. **Login Page**
-2. **PDF Upload and Processing**
-3. **AI Notes Interface**
-4. **Saved Notes Section**
-5. **Subscription Plan**
+   ![1735408116916](image/README/1735408116916.png)
+2. **Homr Page**
+   ![1735408188379](image/README/1735408188379.png)
+   ![1735408229967](image/README/1735408229967.png)
+   ![1735408267467](image/README/1735408267467.png)
+
+3. **PDF Upload and Processing**
+   ![1735408381129](image/README/1735408381129.png)
+   ![1735408310257](image/README/1735408310257.png)
+
+4. **AI Notes Interface**
+   ![1735408475553](image/README/1735408475553.png)
+
+5. **Saved Notes Section**
+   ![1735408496494](image/README/1735408496494.png)
+6. **Subscription Plan**
+   ![1735408523489](image/README/1735408523489.png)
 
 ## 🌐 Live Demo
 
