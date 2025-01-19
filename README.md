@@ -1,4 +1,4 @@
-# AI-Powered PDF Notes Making App ✍️📚
+# AI-Powered PDF Notes Taking App ✍️📚
 
 An advanced Full Stack application for extracting and making notes from PDFs using AI. Built with modern technologies, this app leverages artificial intelligence to provide a seamless note-taking experience, with persistent storage, user-friendly design, and subscription plans.
 
